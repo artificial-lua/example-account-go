@@ -1,0 +1,21 @@
+version: "3"
+services:
+  go-application-postgres:
+    container_name: postgres
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+  go-application:
+    container_name: go-application
+    build: .
+    ports:
+      - "80:1323"
+networks:
+  go_application_network:
+    driver: bridge

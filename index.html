@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="id=edge">
+    <title>go Account CRUD Example</title>
+</head>
+<body>
+    <h1>Account CRUD</h1>
+    <h3>Join</h3>
+    <form method="POST" action="/join">
+        <label>email</label><input placeholder="email" name="email" type="email"/><br>
+        <label>Password</label><input placeholder="password" name="password" type="password"/><br>
+        <label>Name</label><input placeholder="name" name="name"/><br>
+        <label>Birth</label><input placeholder="birth" name="birth" type="date"/><br>
+        <label>Gender</label><select name="gender">
+            <option value="M">Male</option>
+            <option value="F">Female</option>
+        </select>
+        <button>Join</button>
+    </form>
+    <h3>Login</h3>
+    <form method="POST" action="/login">
+        <label>email</label><input placeholder="email" name="email" type="email"/><br>
+        <label>Password</label><input placeholder="password" name="password" type="password"/><br>
+        <button>Login</button>
+    </form>
+</body>
+</html>

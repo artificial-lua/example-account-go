@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/artificial-lua/example-account-go/auth"
+	"github.com/artificial-lua/example-account-go/dbconnector"
 	"github.com/labstack/echo"
 )
 
@@ -12,7 +13,8 @@ const savedFileName string = "pages.csv"
 const provideFileName string = "page.csv"
 
 func handleHome(c echo.Context) error {
-	return c.File("index.html")
+	log.Println("handleHome", c)
+	return c.File("html/index.html")
 }
 
 func handleJoin(c echo.Context) error {
@@ -47,6 +49,7 @@ func handleJoin(c echo.Context) error {
 }
 
 func handleJoinSuccess(c echo.Context) error {
+	log.Println("handleJoinSuccess", c)
 	return c.JSON(200, map[string]string{
 		"message": "join success",
 	})
@@ -59,6 +62,11 @@ func handleJoinFailed(c echo.Context) error {
 }
 
 func main() {
+	db, err := dbconnector.NewPostgreSQLConnector()
+	if err != nil {
+		log.Fatal(err)
+	}
+	dbconnector.DBStartupTask(db)
 	e := echo.New()
 	e.GET("/", handleHome)
 	e.POST("/join", handleJoin)

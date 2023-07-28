@@ -4,7 +4,16 @@ import (
 	"database/sql"
 	"fmt"
 
+	"github.com/artificial-lua/example-account-go/env"
 	_ "github.com/lib/pq"
+)
+
+var (
+	DB_HOST = env.Getenv("DB_HOST")
+	DB_PORT = env.Getenv("DB_PORT")
+	DB_USER = env.Getenv("DB_USER")
+	DB_PASS = env.Getenv("DB_PASS")
+	DB_NAME = env.Getenv("DB_NAME")
 )
 
 func SetClinetEncoding(conn *sql.DB) (sql.Result, error) {
@@ -26,8 +35,11 @@ func makeUserTable(conn *sql.DB) (sql.Result, error) {
 }
 
 // NewDBConnector returns a new DBConnector
-func NewPostgreSQLConnector(username string, password string, db string) (*sql.DB, error) {
-	dbinfo := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable", username, password, db)
+func NewPostgreSQLConnector() (*sql.DB, error) {
+	dbinfo := fmt.Sprintf(
+		"host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
+		DB_HOST, DB_PORT, DB_USER, DB_PASS, DB_NAME,
+	)
 
 	conn, err := sql.Open("postgres", dbinfo)
 	if err != nil {

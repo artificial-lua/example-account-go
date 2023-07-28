@@ -4,18 +4,28 @@ services:
     container_name: postgres
     image: postgres:latest
     ports:
-      - "5432:5432"
+      - "54321:5432"
     volumes:
       - ./data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=postgres
+      - POSTGRES_USER=dockeruser
+      - POSTGRES_PASSWORD=dockerpassword
+      - POSTGRES_DB=serviceprovider
+    restart: always
   go-application:
     container_name: go-application
     build: .
+    depends_on:
+      - go-application-postgres
     ports:
       - "80:1323"
+    environment:  
+      - DB_HOST=go-application-postgres
+      - DB_PORT=5432
+      - DB_USER=dockeruser
+      - DB_PASS=dockerpassword
+      - DB_NAME=serviceprovider
+    restart: always
 networks:
   go_application_network:
     driver: bridge

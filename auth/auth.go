@@ -53,12 +53,6 @@ func (a *Account) GetGender() string {
 	return a.gender
 }
 
-const (
-	DB_USER = "postgres"
-	DB_PASS = "postgres"
-	DB_NAME = "postgres"
-)
-
 const accountTableColumns = "email, hash, salt, name, birth, gender"
 
 var emailError = errors.New("email is invalid")
@@ -79,7 +73,7 @@ func checkEmail(email string) bool {
 }
 
 func checkEmailIsNotExists(email string) bool {
-	db, err := dbconnector.NewPostgreSQLConnector(DB_USER, DB_PASS, DB_NAME)
+	db, err := dbconnector.NewPostgreSQLConnector()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -203,7 +197,7 @@ func CreateAcccount(ac *Account) (sql.Result, error) {
 		return nil, err
 	}
 
-	db, err := dbconnector.NewPostgreSQLConnector(DB_USER, DB_PASS, DB_NAME)
+	db, err := dbconnector.NewPostgreSQLConnector()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -227,7 +221,7 @@ func CreateAcccount(ac *Account) (sql.Result, error) {
 }
 
 func ReadAccountByEmail(email string) (*Account, error) {
-	db, err := dbconnector.NewPostgreSQLConnector(DB_USER, DB_PASS, DB_NAME)
+	db, err := dbconnector.NewPostgreSQLConnector()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -279,7 +273,7 @@ func UpdateAccount(ac *Account) (sql.Result, error) {
 		return nil, err
 	}
 
-	db, err := dbconnector.NewPostgreSQLConnector(DB_USER, DB_PASS, DB_NAME)
+	db, err := dbconnector.NewPostgreSQLConnector()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -317,7 +311,7 @@ func UpdateAccount(ac *Account) (sql.Result, error) {
 }
 
 func DeleteAccountByEmail(email string) (sql.Result, error) {
-	db, err := dbconnector.NewPostgreSQLConnector(DB_USER, DB_PASS, DB_NAME)
+	db, err := dbconnector.NewPostgreSQLConnector()
 	if err != nil {
 		log.Fatal(err)
 	}
